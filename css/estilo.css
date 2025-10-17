@@ -1,0 +1,272 @@
+/* ==========================================================
+   Estilo principal refeito — tema moderno, LED glow, modo
+   claro/escuro, layout responsivo e acessível.
+   ==========================================================
+*/
+
+:root{
+  --bg-dark: #0f0f10;
+  --bg-light: #f4e9d8;
+  --surface: #1c1c1c;
+  --muted: #9aa3a8;
+  --accent: #f9d342; /* dourado */
+  --accent-contrast: #1c1c1c;
+  --danger: #e33b3b;
+  --led-color: 249,211,66; /* rgb values for glow */
+  --led-intensity: 0.30; /* 0..1 */
+  --led-speed: 9s;
+  --max-width: 1200px;
+}
+
+/* Light / Dark themes */
+/* Light / Dark themes */
+[data-theme='dark'] {
+  --page-bg: var(--bg-dark);
+  --text: #fff;
+  --muted: #d1cdbf;
+  --card-bg: #0b0b0b;
+  --nav-link-color: var(--accent);
+
+  /* REMOVA a linha: --bs-body-bg: var(--page-bg); 
+    E ADICIONE a regra abaixo no lugar:
+  */
+  .bg-white {
+    background-color: var(--page-bg) !important;
+  }
+}
+[data-theme='light']{ --page-bg: #fbfaf7; --text: #222; --card-bg: #fff; --nav-link-color: var(--accent); }
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0; background:var(--page-bg); color:var(--text); font-family: 'Merriweather', Georgia, serif;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  transition: background .35s ease, color .35s ease;
+}
+
+/* make card text more readable in dark mode */
+.card, .card-body, .gallery-caption, .lb-caption{color:var(--text)}
+.hero h1, .section-title h2{color:var(--accent)}
+
+.container{max-width:var(--max-width); margin:0 auto; padding:0 16px}
+
+/* site shell with LED frame */
+.site-shell{position:relative; padding:28px; border-radius:18px; margin:18px; z-index:10}
+.site-shell::before, .site-shell::after{content:'';position:absolute;inset:-8px;border-radius:22px;pointer-events:none;z-index:5}
+.site-shell::before{box-shadow:0 0 80px 18px rgba(var(--led-color), calc(var(--led-intensity) * .95));filter:blur(10px);opacity:0.95;animation:ledPulse var(--led-speed) ease-in-out infinite}
+.site-shell::after{border:2px solid rgba(var(--led-color), calc(var(--led-intensity) * .65));mix-blend-mode:screen;opacity:0.95}
+
+/* LED ambient ring — suave e performático (usa pseudo elements) */
+body::before, body::after{
+  content: '';
+  position: fixed; inset: -20%; z-index:0; pointer-events:none; opacity: calc(var(--led-intensity) * 1);
+  background-repeat: no-repeat; background-position: center; background-size: 1600px 1600px;
+  filter: blur(40px) saturate(1.1);
+  transition: opacity .6s ease;
+}
+body::before{
+  background-image: radial-gradient(circle at 10% 20%, rgba(var(--led-color),.12) 0 6%, transparent 18%), radial-gradient(circle at 90% 80%, rgba(var(--led-color),.08) 0 8%, transparent 22%);
+  animation: ledShift var(--led-speed) linear infinite;
+}
+body::after{
+  background-image: radial-gradient(circle at 50% 10%, rgba(255,255,255,.02) 0 12%, transparent 20%), radial-gradient(circle at 50% 90%, rgba(0,0,0,.02) 0 12%, transparent 30%);
+  animation: ledShiftAlt calc(var(--led-speed) * 1.6) linear infinite;
+}
+@keyframes ledShift{ 0%{transform:translateY(0)}50%{transform:translateY(6%)}100%{transform:translateY(0)} }
+@keyframes ledShiftAlt{ 0%{transform:translateX(0)}50%{transform:translateX(-4%)}100%{transform:translateX(0)} }
+
+/* NAV */
+.navbar{position:relative; z-index:20}
+.navbar-brand{font-weight:700; color:var(--accent) !important; letter-spacing:0.4px}
+.nav-link{color:var(--nav-link-color) !important; opacity:1; font-weight:600}
+.nav-link:hover{color:var(--accent-contrast) !important; text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.theme-toggle{border:0;background:transparent;color:var(--text);padding:6px 10px;border-radius:8px;display:inline-flex;align-items:center;gap:8px}
+.theme-toggle:focus{outline:3px solid rgba(var(--led-color),.12)}
+
+/* Skip link */
+.skip-link{position:absolute;left:12px;top:12px;background:var(--accent);color:var(--accent-contrast);padding:8px 12px;border-radius:8px;z-index:999;transform:translateY(-140%);transition:transform .18s ease}
+.skip-link:focus{transform:translateY(0);outline:3px solid rgba(var(--led-color),.12)}
+
+/* search input in navbar */
+.input-group .form-control{min-width:220px}
+#search-count{font-weight:700}
+.result-highlight{outline:3px solid rgba(var(--led-color),.16);box-shadow:0 6px 24px rgba(var(--led-color),.06)}
+
+/* HERO */
+.hero{padding:4rem 0; text-align:center; position:relative; z-index:2}
+.hero .intro{max-width:920px;margin:0 auto}
+.hero h1{font-family:'Playfair Display', Georgia, serif;font-size:2.6rem;margin:0 0 .6rem;color:var(--accent)}
+.hero p{color:var(--muted);font-size:1.06rem;margin-bottom:1rem}
+.hero .btn-primary{background:linear-gradient(90deg,var(--accent),#e0b33a);border:0;color:var(--accent-contrast);padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+
+/* SECTIONS */
+section{padding:2.5rem 0}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:1rem}
+.section-title h2{margin:0;color:var(--text)}
+
+/* Cards */
+.card{background:var(--card-bg); border-radius:12px; padding:18px; box-shadow:0 8px 30px rgba(2,6,23,0.45); border:1px solid rgba(255,255,255,.02);}
+.card h5{margin-top:0}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.gallery-card{overflow:hidden;border-radius:12px;position:relative;cursor:zoom-in}
+.card-led{position:relative;overflow:visible}
+.card-led::before{content:'';position:absolute;inset:6px;border-radius:12px;pointer-events:none;box-shadow:0 12px 36px rgba(var(--led-color), calc(var(--led-intensity) * .18));opacity:.95;transition:transform .2s, box-shadow .2s}
+.card-led:hover::before{box-shadow:0 28px 90px rgba(var(--led-color), calc(var(--led-intensity) * .28));transform:scale(1.03);}
+
+@keyframes ledPulse{0%{transform:scale(1);opacity:0.9}50%{transform:scale(1.01);opacity:1}100%{transform:scale(1);opacity:0.9}}
+.gallery-card img{display:block;width:100%;height:220px;object-fit:cover;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.gallery-card:hover img{transform:scale(1.06);filter:contrast(1.05) saturate(1.05)}
+.gallery-caption{position:absolute;left:12px;bottom:12px;background:linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.18));padding:8px 12px;border-radius:8px;color:#fff;font-size:.92rem}
+
+/* tilt effect */
+.tilt{transform-style:preserve-3d;transition:transform .25s ease, box-shadow .25s ease}
+.tilt:hover{box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.tilt-inner{transform:translateZ(12px);} 
+
+/* info grid (cards similar to top ones) */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.info-card{display:flex;flex-direction:column;align-items:stretch;padding:0;border-radius:12px;overflow:hidden}
+.info-card img{width:100%;height:160px;object-fit:cover}
+.info-card .card-body{padding:12px}
+.info-card h5{margin:0 0 6px}
+
+/* favoritos */
+.fav-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.45);border:0;color:#fff;padding:6px;border-radius:8px}
+.fav-btn.active{background:var(--danger);box-shadow:0 8px 30px rgba(var(--led-color),.12)}
+
+/* lazy placeholder */
+.placeholder{background:linear-gradient(90deg,#eee #f5f5f5 #eee);background-size:200% 100%;animation:placeholderShimmer 1.6s linear infinite}
+@keyframes placeholderShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* painel lateral (índice) */
+.side-index{display:none}
+
+/* interactive overlay */
+.card-media{cursor:pointer}
+.card-media .gallery-caption{transition:transform .18s ease,opacity .18s; transform:translateY(6px)}
+.card-media:hover .gallery-caption{transform:translateY(0);opacity:1}
+
+/* small adjustments for lightbox focus outlines */
+.lb-content button{min-width:44px}
+
+/* VIDEO CARD (refinado) */
+.video-card{max-width:920px;margin:0 auto;border-radius:14px;overflow:hidden;position:relative;z-index:2}
+.led-frame{padding:8px;border-radius:16px;position:relative}
+.led-frame::before{content:'';position:absolute;inset:6px;border-radius:10px;pointer-events:none;box-shadow:0 8px 30px rgba(var(--led-color), calc(var(--led-intensity) * .12));}
+.video-thumb{width:100%;height:420px;object-fit:cover;display:block}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.42))}
+.play-button{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.45);transition:transform .15s}
+.play-button svg{width:42px;height:42px;fill:var(--accent-contrast)}
+.play-button:focus{outline:3px solid rgba(var(--led-color),.12)}
+
+/* VIDEO LIGHTBOX */
+#video-lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.8);z-index:1200;padding:20px}
+#video-lightbox.show{display:flex}
+.video-modal{width:min(1100px,98vw);border-radius:12px;overflow:hidden;background:linear-gradient(180deg, #050505, #0b0b0b);box-shadow:0 40px 120px rgba(2,6,23,.7)}
+.video-wrapper{position:relative;padding-top:56.25%}
+.video-wrapper iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-footer{display:flex;justify-content:center;padding:14px;background:transparent}
+.close-video-btn{background:var(--danger);color:#fff;border:0;padding:10px 18px;border-radius:10px;font-weight:700}
+
+/* Lightbox images controls */
+.lb-backdrop{display:none}
+.lb-backdrop.show{display:flex}
+.lb-content{display:flex;flex-direction:column;align-items:center;gap:12px}
+.lb-img{max-width:92vw;max-height:78vh;border-radius:10px;box-shadow:0 18px 70px rgba(0,0,0,.6);transform-origin:center center;transition:transform .28s ease,opacity .25s ease}
+.lb-content button{background:transparent;border:1px solid rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:8px}
+.lb-content button:focus{outline:3px solid rgba(var(--led-color),.12)}
+.lb-caption{color:#fff;opacity:.95}
+
+/* animation on open */
+.lb-backdrop.show .lb-img{transform:scale(1);opacity:1}
+
+
+/* LIGHTBOX IMAGES */
+.lb-backdrop{position:fixed;inset:0;display:none;background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:1150}
+.lb-backdrop.show{display:flex}
+.lb-img{max-width:92vw;max-height:86vh;border-radius:10px}
+
+/* RODAPÉ */
+footer{padding:2rem 0;background:linear-gradient(180deg,#2b1b23,#24141a);color:var(--text)}
+
+/* Responsividade */
+@media (max-width:900px){.video-thumb{height:300px}.hero h1{font-size:2rem}}
+@media (max-width:576px){.video-thumb{height:200px}.play-button{width:68px;height:68px}}
+
+/* utilitários */
+.text-muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Toasts pequenos e discretos */
+#toasts .toast{min-width:220px;max-width:420px;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.4));color:#fff;padding:10px 12px;border-radius:10px;box-shadow:0 14px 40px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.04);opacity:0;transform:translateY(-8px) scale(.98)}
+.toast-show{animation:toastIn .26s ease forwards}
+.toast-hide{animation:toastOut .28s ease forwards}
+@keyframes toastIn{0%{opacity:0;transform:translateY(-8px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-8px) scale(.98)}}
+
+
+
+/* Card Square */
+.card-square {
+  width: 260px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto 18px auto;
+}
+.card-square .card-img-top {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+.card-square .card-body {
+  flex: 1;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 576px) {
+  .card-square {
+    width: 98vw;
+    height: 260px;
+  }
+  .card-square .card-img-top {
+    height: 90px;
+  }
+}
+
+
+/* ===============================
+   ÍCONE DA LUA — COR DINÂMICA
+   Inserido: atualizado para alternar cor
+   =============================== */
+
+/* garante transição suave */
+#themeToggle svg, .theme-toggle svg {
+  transition: color .25s ease, fill .25s ease, filter .25s ease;
+  /* usa currentColor / fill presente no SVG: o seu SVG usa fill="currentColor" então color funciona */
+}
+
+/* Lua branca no modo claro */
+[data-theme='light'] #themeToggle svg,
+[data-theme='light'] .theme-toggle svg {
+  color: white;
+  fill: white;
+  filter: none;
+}
+
+/* Lua amarela no modo escuro */
+[data-theme='dark'] #themeToggle svg,
+[data-theme='dark'] .theme-toggle svg {
+  color: var(--accent); /* usa a variável dourada do tema */
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(249,211,66,0.28));
+}
+

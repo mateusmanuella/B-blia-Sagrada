@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recursos — Conheça a Bíblia</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navegação principal">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Bíblia Sagrada</a>
+      <div class="d-flex align-items-center ms-3">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Alternar tema (luz/escuro)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"></path>
+          </svg>
+          <span class="sr-only">Alternar tema</span>
+        </button>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#informacoes">Informações</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#galeria">Galeria</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#midia">Mídia / Mapa</a></li>
+          <li class="nav-item"><a class="nav-link" href="versiculos.html">Versículos</a></li>
+          <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="site-shell" aria-label="Conteúdo do site">
+    <main class="container py-5">
+      <h1>Recursos e Downloads</h1>
+      <p>Aqui você encontrará materiais de estudo em PDF, links e guias.</p>
+      <ul>
+        <li><a href="#">Guia de Estudo - Introdução (PDF)</a></li>
+        <li><a href="#">Mapas Bíblicos (Download)</a></li>
+        <li><a href="#">Comparativo de Traduções (Artigo)</a></li>
+      </ul>
+    </main>
+  </div>
+
+  <script src="sw.js"></script>
+</body>
+</html>

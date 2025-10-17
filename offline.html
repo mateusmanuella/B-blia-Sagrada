@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offline - Conheça a Bíblia</title>
+  <style>
+    body { 
+      font-family: 'Segoe UI', system-ui, sans-serif; 
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white; 
+      margin: 0; 
+      padding: 20px; 
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .container { max-width: 500px; }
+    h1 { font-size: 2.5em; margin-bottom: 20px; }
+    p { font-size: 1.2em; margin-bottom: 30px; opacity: 0.9; }
+    .icon { font-size: 4em; margin-bottom: 20px; }
+    .button { 
+      background: #f9d342; 
+      color: #1e3c72; 
+      border: none; 
+      padding: 12px 30px; 
+      font-size: 1.1em; 
+      border-radius: 25px; 
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    .button:hover { transform: scale(1.05); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📚</div>
+    <h1>Você está offline</h1>
+    <p>Mas não se preocupe! A Palavra de Deus está sempre disponível.</p>
+    <p>Algumas funcionalidades podem estar limitadas. Quando a conexão voltar, tudo voltará ao normal.</p>
+    <button class="button" onclick="window.location.reload()">Tentar Novamente</button>
+  </div>
+</body>
+</html>

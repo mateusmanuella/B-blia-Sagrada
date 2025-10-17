@@ -1,0 +1,21 @@
+{
+  "name": "conheca-a-biblia",
+  "version": "1.0.0",
+  "description": "Site Conheça a Bíblia - Projeto DSA1 - Site profissional sobre a Bíblia Sagrada",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "npm run minify && npm run optimize-images",
+    "minify": "uglify-js js/*.js -o dist/script.min.js && cleancss css/estilo.css -o dist/estilo.min.css",
+    "optimize-images": "echo 'Otimize as imagens manualmente com ferramentas online'",
+    "validate": "html-validate *.html",
+    "lint": "eslint js/",
+    "dev": "live-server --port=3000"
+  },
+  "keywords": ["biblia", "christian", "education", "religion", "faith"],
+  "author": "INF1FT",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
