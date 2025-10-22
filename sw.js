@@ -1,8 +1,9 @@
-// sw.js - Service Worker profissional para cache offline
-const STATIC_CACHE = 'biblia-static-v3';
-const DYNAMIC_CACHE = 'biblia-dynamic-v1';
+// sw.js - Service Worker otimizado para mobile
+const STATIC_CACHE = 'biblia-mobile-v4';
+const DYNAMIC_CACHE = 'biblia-dynamic-v2';
 const OFFLINE_PAGE = './offline.html';
 
+// Recursos críticos para mobile
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -12,169 +13,170 @@ const STATIC_ASSETS = [
   './feedback-admin.html',
   './resources.html',
   './fe.html',
-  './coragem.html',
-  './sabedoria.html',
-  './esperanca.html',
-  './reflexao.html',
   './css/estilo.css',
   './js/core.js',
+  './js/search.js',
   './js/gallery.js',
   './js/feedback.js',
   './manifest.json',
   './favicon.svg',
-  './offline.html'
+  './offline.html',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
 ];
 
-// Instalação - cache dos assets essenciais
+// Estratégia: Cache First para recursos estáticos, Network First para conteúdo dinâmico
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando Service Worker...');
-  
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then(cache => {
-        console.log('[SW] Cache estático aberto, adicionando assets...');
-        return cache.addAll(STATIC_ASSETS).catch(error => {
-          console.warn('[SW] Erro ao adicionar alguns assets:', error);
-        });
+        console.log('Cache instalado para recursos móveis');
+        return cache.addAll(STATIC_ASSETS);
       })
-      .then(() => {
-        console.log('[SW] Todos os assets em cache!');
-        return self.skipWaiting();
+      .then(() => self.skipWaiting())
+      .catch(error => {
+        console.error('Falha na instalação do cache:', error);
       })
   );
 });
 
-// Ativação - limpar caches antigos
 self.addEventListener('activate', event => {
-  console.log('[SW] Service Worker ativado!');
-  
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-            console.log('[SW] Removendo cache antigo:', cacheName);
+            console.log('Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     }).then(() => {
-      console.log('[SW] Pronto para controlar clientes!');
+      console.log('Service Worker ativado para mobile');
       return self.clients.claim();
     })
   );
 });
 
-// Estratégia: Cache First com fallback para Network
 self.addEventListener('fetch', event => {
-  // Ignorar requisições não-GET e de terceiros
-  if (event.request.method !== 'GET' || 
-      !event.request.url.startsWith(self.location.origin)) {
-    return;
-  }
-
-  // Para APIs e HTML, usar estratégia Network First
-  if (event.request.url.includes('/api/') || event.request.destination === 'document') {
-    event.respondWith(networkFirstStrategy(event.request));
-    return;
-  }
-
-  // Para outros recursos, usar Cache First
-  event.respondWith(cacheFirstStrategy(event.request));
-});
-
-// Estratégia: Cache First
-async function cacheFirstStrategy(request) {
-  try {
-    const cachedResponse = await caches.match(request);
-    
-    if (cachedResponse) {
-      console.log('[SW] Servindo do cache:', request.url);
-      return cachedResponse;
+  // Pular requisições não-GET e de diferentes origens
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+    // Para recursos externos (Bootstrap), permitir mesmo sendo de origem diferente
+    if (!event.request.url.includes('cdn.jsdelivr.net') && 
+        !event.request.url.includes('fonts.googleapis.com') &&
+        !event.request.url.includes('fonts.gstatic.com')) {
+      return;
     }
-
-    console.log('[SW] Buscando na rede:', request.url);
-    const networkResponse = await fetch(request);
-    
-    if (networkResponse.status === 200) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    console.log('[SW] Erro na rede:', error);
-    
-    // Fallbacks específicos
-    if (request.destination === 'document') {
-      const offlinePage = await caches.match(OFFLINE_PAGE);
-      if (offlinePage) return offlinePage;
-    }
-    
-    if (request.destination === 'image') {
-      const placeholder = await caches.match('./images/placeholder.jpg');
-      if (placeholder) return placeholder;
-    }
-    
-    return new Response('Recurso offline', {
-      status: 408,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-    });
-  }
-}
-
-// Estratégia: Network First
-async function networkFirstStrategy(request) {
-  try {
-    const networkResponse = await fetch(request);
-    
-    if (networkResponse.status === 200) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    console.log('[SW] Network First falhou, usando cache:', error);
-    
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    
-    if (request.destination === 'document') {
-      const offlinePage = await caches.match(OFFLINE_PAGE);
-      if (offlinePage) return offlinePage;
-    }
-    
-    return new Response('Página offline', {
-      status: 408,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' }
-    });
-  }
-}
-
-// Mensagens do Service Worker
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
   }
   
-  if (event.data && event.data.type === 'GET_VERSION') {
-    event.ports[0].postMessage({ version: 'v3' });
+  // Estratégias diferentes por tipo de recurso
+  const url = new URL(event.request.url);
+  
+  // Recursos estáticos - Cache First
+  if (STATIC_ASSETS.includes(url.pathname) || 
+      url.href.includes('bootstrap') ||
+      url.href.includes('googleapis')) {
+    event.respondWith(
+      caches.match(event.request)
+        .then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          
+          return fetch(event.request)
+            .then(networkResponse => {
+              // Verificar se a resposta é válida
+              if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                return networkResponse;
+              }
+              
+              // Cache da resposta para próximo uso
+              const responseClone = networkResponse.clone();
+              caches.open(DYNAMIC_CACHE)
+                .then(cache => cache.put(event.request, responseClone));
+              return networkResponse;
+            })
+            .catch(() => {
+              // Fallback para páginas HTML
+              if (event.request.destination === 'document') {
+                return caches.match(OFFLINE_PAGE);
+              }
+              return new Response('Recurso offline', { 
+                status: 408,
+                headers: { 'Content-Type': 'text/plain' }
+              });
+            });
+        })
+    );
+    return;
   }
+  
+  // Imagens - Cache com stale-while-revalidate
+  if (event.request.destination === 'image') {
+    event.respondWith(
+      caches.match(event.request)
+        .then(cachedResponse => {
+          const fetchPromise = fetch(event.request)
+            .then(networkResponse => {
+              // Verificar se a resposta é válida
+              if (networkResponse && networkResponse.status === 200) {
+                // Atualizar cache em background
+                caches.open(DYNAMIC_CACHE)
+                  .then(cache => cache.put(event.request, networkResponse.clone()));
+              }
+              return networkResponse;
+            })
+            .catch(() => {
+              // Silenciosamente falha se não conseguir buscar
+              return cachedResponse;
+            });
+            
+          return cachedResponse || fetchPromise;
+        })
+    );
+    return;
+  }
+  
+  // Padrão: Network First
+  event.respondWith(
+    fetch(event.request)
+      .then(networkResponse => {
+        // Cache de respostas bem-sucedidas
+        if (networkResponse.status === 200) {
+          const responseClone = networkResponse.clone();
+          caches.open(DYNAMIC_CACHE)
+            .then(cache => cache.put(event.request, responseClone));
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Fallback para cache
+        return caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            
+            // Fallback genérico para páginas
+            if (event.request.destination === 'document') {
+              return caches.match(OFFLINE_PAGE);
+            }
+            
+            return new Response('Recurso offline', { 
+              status: 408,
+              headers: { 'Content-Type': 'text/plain' }
+            });
+          });
+      })
+  );
 });
 
-// Sincronização em background
+// Background Sync para enviar feedback quando online
 self.addEventListener('sync', event => {
-  if (event.tag === 'background-sync') {
-    console.log('[SW] Sincronização em background');
-    event.waitUntil(doBackgroundSync());
+  if (event.tag === 'background-feedback-sync') {
+    event.waitUntil(
+      // Implementar sync de feedback offline
+      console.log('Sincronizando feedback em background...')
+    );
   }
 });
-
-async function doBackgroundSync() {
-  // Implementar sincronização de dados offline
-  console.log('[SW] Executando sincronização...');
-  return Promise.resolve();
-}

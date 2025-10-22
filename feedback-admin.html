@@ -40,7 +40,9 @@
   <main>
     <h1>Painel administrativo — Feedback</h1>
     <p>Insira a senha para ver as respostas.</p>
-    <div class="mb-3"><input id="admin-pass" type="password" class="form-control" placeholder="Senha do administrador"></div>
+    <div class="mb-3">
+      <input id="admin-pass" type="password" class="form-control" placeholder="Senha do administrador">
+    </div>
     <div class="mb-3">
       <button id="admin-login" class="btn btn-success">Entrar</button>
       <button id="admin-logout" class="btn btn-secondary">Sair</button>
@@ -53,44 +55,8 @@
     </div>
   </main>
 </div>
-<script>
-(function(){
-  const STORAGE_KEY = 'feedback.responses.v1';
-  const ADMIN_PASS = 'admin2025'; // deve combinar com o valor em feedback.html
-  const adminLogin = document.getElementById('admin-login');
-  const adminLogout = document.getElementById('admin-logout');
-  const adminPanel = document.getElementById('admin-panel');
-  const answersList = document.getElementById('answers-list');
-  const exportBtn = document.getElementById('export-answers');
-  const clearBtn = document.getElementById('clear-answers');
-  const countEl = document.getElementById('count');
 
-  function readStored(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){ return []; } }
-  function saveStored(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
-  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[m]); }
-  function renderAnswers(){ const arr = readStored(); countEl.textContent = arr.length || 0; if(!arr.length) answersList.innerHTML = '<p class="text-muted">Nenhuma resposta registrada.</p>'; else answersList.innerHTML = arr.map((r,idx)=>{ return `<div class="p-2 mb-2" style="border-bottom:1px solid rgba(0,0,0,.06)"><strong>#${idx+1} - ${new Date(r.timestamp).toLocaleString()}</strong><div style="font-size:.95rem">${Object.keys(r.answers).map(k=> k+': '+(r.answers[k]||'-')).join(' | ')}</div><div style="margin-top:6px">${r.freeText ? '<em>'+escapeHtml(r.freeText)+'</em>' : '<span class=\"text-muted\">(sem comentário)</span>'}</div></div>`; }).join(''); }
-
-  adminLogin.addEventListener('click', ()=>{
-    const pass = document.getElementById('admin-pass').value || '';
-    if(pass !== ADMIN_PASS){ alert('Senha incorreta'); return; }
-    adminPanel.style.display='block'; renderAnswers();
-  });
-  adminLogout.addEventListener('click', ()=>{ adminPanel.style.display='none'; });
-
-  exportBtn.addEventListener('click', ()=>{
-    const arr = readStored();
-    const header = ['Timestamp','FreeText', ...Array.from({length:12},(_,i)=>'Q'+(i+1))];
-    const esc = v => '"'+ String(v || '').replace(/"/g,'""') +'"';
-    const csv = [ header.join(',') ];
-    arr.forEach(r=>{ const row = [ esc(r.timestamp), esc(r.freeText), ...Array.from({length:12},(_,i)=> esc(r.answers['q'+(i+1)] || '')) ]; csv.push(row.join(',')); });
-    const blob = new Blob([csv.join('\n')], {type:'text/csv'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='feedback-respostas.csv'; a.click(); URL.revokeObjectURL(a.href);
-  });
-
-  clearBtn.addEventListener('click', ()=>{ if(confirm('Apagar todas as respostas?')){ saveStored([]); renderAnswers(); alert('Respostas apagadas.'); } });
-
-})();
-</script>
-
-<script src="sw.js"></script>
+<script src="js/core.js"></script>
+<script src="js/feedback.js"></script>
 </body>
 </html>

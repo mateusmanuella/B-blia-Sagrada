@@ -1,4 +1,4 @@
-// core.js - Módulo principal da aplicação
+// core.js - Módulo principal da aplicação (OTIMIZADO)
 class BibleApp {
   constructor() {
     this.theme = localStorage.getItem('theme') || 'dark';
@@ -11,7 +11,7 @@ class BibleApp {
     this.setupNavigation();
     this.setupAccessibility();
     this.setupServiceWorker();
-    this.setupFavorites(); // ← MÉTODO ADICIONADO
+    this.setupFavorites();
     this.trackPageView();
     
     console.log('BibleApp inicializado - v1.0.0');
@@ -37,7 +37,6 @@ class BibleApp {
   }
 
   setupNavigation() {
-    // Smooth scroll para âncoras internas
     document.querySelectorAll("a.nav-link[href^='#']").forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -56,7 +55,6 @@ class BibleApp {
       });
     });
 
-    // Navegação por teclado
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.closeAllModals();
@@ -65,7 +63,6 @@ class BibleApp {
   }
 
   setupAccessibility() {
-    // Melhorar foco visual
     document.addEventListener('focusin', (e) => {
       e.target.classList.add('focus-visible');
     });
@@ -74,7 +71,6 @@ class BibleApp {
       e.target.classList.remove('focus-visible');
     });
 
-    // Skip links
     const skipLinks = document.querySelectorAll('.skip-link');
     skipLinks.forEach(link => {
       link.addEventListener('click', (e) => {
@@ -95,7 +91,6 @@ class BibleApp {
           const registration = await navigator.serviceWorker.register('sw.js');
           console.log('SW registrado com sucesso:', registration);
 
-          // Verificar atualizações
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
             console.log('Nova versão do SW encontrada:', newWorker);
@@ -106,7 +101,6 @@ class BibleApp {
         }
       });
 
-      // Monitorar mudanças de conexão
       window.addEventListener('online', () => {
         this.showToast('Conexão restaurada', 'success');
       });
@@ -117,7 +111,6 @@ class BibleApp {
     }
   }
 
-  // === MÉTODOS DE FAVORITOS ADICIONADOS ===
   setupFavorites() {
     this.updateFavoriteButtons();
   }
@@ -150,7 +143,6 @@ class BibleApp {
       card.appendChild(btn);
     });
   }
-  // === FIM DOS MÉTODOS DE FAVORITOS ===
 
   closeAllModals() {
     document.querySelectorAll('.lb-backdrop.show').forEach(modal => {
@@ -170,10 +162,8 @@ class BibleApp {
     
     container.appendChild(toast);
     
-    // Animação de entrada
     requestAnimationFrame(() => toast.classList.add('toast-show'));
     
-    // Auto-remover
     setTimeout(() => {
       toast.classList.remove('toast-show');
       toast.classList.add('toast-hide');
@@ -200,7 +190,6 @@ class BibleApp {
   }
 
   trackPageView() {
-    // Analytics básico
     if (typeof gtag !== 'undefined') {
       gtag('config', 'GA_MEASUREMENT_ID', {
         page_title: document.title,
@@ -223,7 +212,6 @@ class BibleApp {
   }
 }
 
-// Gerenciador de Favoritos
 class FavoriteManager {
   constructor() {
     this.key = 'biblia.favorites';
@@ -320,13 +308,6 @@ class FavoriteManager {
   }
 }
 
-// Inicialização da aplicação
-document.addEventListener('DOMContentLoaded', () => {
-  window.bibleApp = new BibleApp();
-  window.favoriteManager = new FavoriteManager();
-});
-
-// Utilitários
 const BibleUtils = {
   normalizeText(text) {
     return (text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -365,7 +346,11 @@ const BibleUtils = {
   }
 };
 
-// Export para uso em outros módulos
+document.addEventListener('DOMContentLoaded', () => {
+  window.bibleApp = new BibleApp();
+  window.favoriteManager = new FavoriteManager();
+});
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { BibleApp, FavoriteManager, BibleUtils };
 }

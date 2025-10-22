@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/estilo.css">
   <style>
     main{max-width:1200px;margin:28px auto;padding:18px}
-    .admin-area{display:none}
     .question{margin-bottom:10px}
   </style>
 </head>
@@ -45,9 +44,7 @@
     <h1 class="mb-3">Feedback sobre o site</h1>
     <p>Por favor responda ao questionário abaixo. Suas respostas serão registradas para que o administrador possa revisar.</p>
     <form id="feedback-form">
-      <div id="questions">
-
-      </div>
+      <div id="questions"></div>
 
       <div class="mb-3">
         <label for="freeText" class="form-label">Resposta em suas próprias palavras (opcional)</label>
@@ -60,180 +57,23 @@
     </form>
 
     <hr>
-    <h3>Área do administrador</h3>
-    <p>Insira a senha para ver as respostas e exportá-las.</p>
+    <h3>Configurações do administrador</h3>
     <div class="mb-3">
       <label for="external-endpoint" class="form-label">Endpoint externo para envio (opcional)</label>
       <input id="external-endpoint" class="form-control" placeholder="https://formspree.io/f/XXXXX" />
-      <div class="mt-2"><button id="save-endpoint" class="btn btn-sm btn-outline-secondary">Salvar endpoint</button>
-        <small class="text-muted ms-2">Deixe vazio para usar apenas armazenamento local. Use Formspree ou outro endpoint CORS-enabled.</small></div>
+      <div class="mt-2">
+        <button id="save-endpoint" class="btn btn-sm btn-outline-secondary">Salvar endpoint</button>
+        <small class="text-muted ms-2">Deixe vazio para usar apenas armazenamento local.</small>
+      </div>
     </div>
 
     <div class="mb-3">
-      <p>Área administrativa movida para outra página. <a href="feedback-admin.html" class="btn btn-sm btn-outline-primary">Abrir painel administrativo</a></p>
+      <p>Área administrativa completa: <a href="feedback-admin.html" class="btn btn-sm btn-outline-primary">Abrir painel administrativo</a></p>
     </div>
   </main>
 </div>
-<script>
-(function(){
-  // perguntas (12) - texto curto + 4 alternativas
-  const questions = [
-    '1. O site é fácil de navegar?',
-    '2. As imagens carregam corretamente?',
-    '3. O conteúdo é informativo?',
-    '4. O design é agradável?',
-    '5. Os títulos estão claros?',
-    '6. Você encontrou erros de ortografia?',
-    '7. O vídeo é relevante?',
-    '8. A busca funcionou bem?',
-    '9. Os cartões "Leia mais" ajudaram?',
-    '10. A leitura no celular foi confortável?',
-    '11. Você recomendaria o site?',
-    '12. Qual a probabilidade de retornar ao site?'
-  ];
-  // opções textuais por pergunta (4 alternativas cada)
-  const options = [
-    ["Sim — muito fácil de encontrar o que procuro","Relativamente fácil","Algumas partes confusas","Não encontrei o que precisava"],
-    ["Todas as imagens carregaram","Quase todas carregaram","Algumas demoraram","Muitas não carregaram"],
-    ["Sim — conteúdo relevante e claro","Em boa parte útil","Parcialmente útil","Não achei informativo"],
-    ["Sim — visual agradável e limpo","Design aceitável","Pode melhorar","Não gostei do visual"],
-    ["Sim — títulos objetivos","Em parte claros","Alguns são confusos","Títulos pouco descritivos"],
-    ["Não encontrei erros","Alguns erros pontuais","Vários erros" ,"Muitos erros"],
-    ["Sim — vídeo relevante para o tema","Interessante, mas curto","Pouco relevante","Não assisti/irrelevante"],
-    ["Sim — busca retornou bons resultados","Funciona na maior parte","Resultados imprecisos","Busca não ajudou"],
-    ["Sim — ajudaram a entender melhor","Foram úteis parcialmente","Pouco úteis","Não foram úteis"],
-    ["Sim — ótima leitura no celular","Boa leitura, com pequenas falhas","Algumas dificuldades","Muito desconfortável"],
-    ["Sim — recomendaria a outros","Talvez recomende","Raramente recomendaria","Não recomendaria"],
-    ["Muito provável (voltarei) ","Provável","Pouco provável","Não voltarei"]
-  ];
 
-  const qcontainer = document.getElementById('questions');
-  questions.forEach((q,i)=>{
-    const div = document.createElement('div'); div.className='question';
-    const title = document.createElement('label'); title.innerHTML = `<strong>${q}</strong>`; div.appendChild(title);
-    const opts = options[i] || ["Opção A","Opção B","Opção C","Opção D"];
-    opts.forEach((text,idx)=>{
-      const id = `q${i+1}_${idx}`;
-      const opt = document.createElement('div'); opt.className='form-check';
-      // value is the text (kept simple)
-      opt.innerHTML = `<input class="form-check-input" type="radio" name="q${i+1}" id="${id}" value="${escapeHtml(text)}"> <label class="form-check-label" for="${id}">${String.fromCharCode(65+idx)}. ${text}</label>`;
-      div.appendChild(opt);
-    });
-    qcontainer.appendChild(div);
-  });
-
-  // storage key (pode ser alterado para envio via POST)
-  const STORAGE_KEY = 'feedback.responses.v1';
-
-  function readStored(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){ return []; }
-  }
-  function saveStored(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
-
-  const form = document.getElementById('feedback-form');
-  // small toast helper for feedback
-  function showToast(msg, ms=2200){
-    const containerId = 'fb-toasts';
-    let container = document.getElementById(containerId);
-    if(!container){ container = document.createElement('div'); container.id = containerId; container.style.position='fixed'; container.style.right='18px'; container.style.top='18px'; container.style.zIndex='2200'; container.style.display='flex'; container.style.flexDirection='column'; container.style.gap='8px'; document.body.appendChild(container); }
-    const t = document.createElement('div'); t.textContent = msg; t.style.background='rgba(0,0,0,.7)'; t.style.color='#fff'; t.style.padding='8px 12px'; t.style.borderRadius='8px'; t.style.boxShadow='0 12px 30px rgba(0,0,0,.4)'; t.style.opacity='0'; t.style.transform='translateY(-6px)'; t.style.transition='all .22s ease'; container.appendChild(t);
-    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateY(0)'; });
-    setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(-6px)'; t.addEventListener('transitionend', ()=> t.remove()); }, ms);
-  }
-
-  // endpoint persistence
-  const endpointInput = document.getElementById('external-endpoint');
-  const saveEndpointBtn = document.getElementById('save-endpoint');
-  const ENDPOINT_KEY = 'feedback.endpoint';
-  // load saved endpoint
-  try{ const saved = localStorage.getItem(ENDPOINT_KEY) || ''; if(saved && endpointInput) endpointInput.value = saved; }catch(e){}
-  if(saveEndpointBtn && endpointInput){
-    saveEndpointBtn.addEventListener('click', ()=>{
-      const v = (endpointInput.value || '').trim();
-      try{ if(v) localStorage.setItem(ENDPOINT_KEY, v); else localStorage.removeItem(ENDPOINT_KEY); showToast('Endpoint salvo.'); }catch(e){ showToast('Erro ao salvar endpoint.'); }
-    });
-  }
-
-  form.addEventListener('submit', async e=>{
-    e.preventDefault();
-    const data = { timestamp: new Date().toISOString(), answers: {}, freeText: document.getElementById('freeText').value || '' };
-    for(let i=1;i<=12;i++){
-      const v = document.querySelector(`input[name=q${i}]:checked`);
-      data.answers['q'+i] = v ? v.value : null;
-    }
-    // always save locally as backup
-    try{ const arr = readStored(); arr.push(data); saveStored(arr); }catch(e){ console.warn('save local failed', e); }
-
-    // attempt to POST to external endpoint if configured
-    try{
-      const endpoint = localStorage.getItem(ENDPOINT_KEY) || '';
-      if(endpoint){
-        // send as form-encoded for broader compatibility (Formspree and similar)
-        const params = new URLSearchParams();
-        params.append('timestamp', data.timestamp);
-        params.append('freeText', data.freeText || '');
-        for(let i=1;i<=12;i++) params.append('q'+i, data.answers['q'+i] || '');
-        const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type':'application/x-www-form-urlencoded', 'Accept':'application/json' }, body: params.toString() });
-        if(res.ok){ showToast('Obrigado! Feedback enviado.'); form.reset(); return; }
-        // non-ok
-        showToast('Enviado localmente, mas falha ao enviar ao endpoint (status '+res.status+').'); form.reset(); return;
-      }
-    }catch(err){
-      console.warn('external send failed', err);
-      showToast('Salvo localmente; falha ao enviar ao endpoint (ver console).');
-      form.reset();
-      return;
-    }
-
-    showToast('Obrigado pelo feedback! (salvo localmente)'); form.reset();
-  });
-
-  document.getElementById('clear-form').addEventListener('click', ()=> form.reset());
-
-  // Admin area simple auth (senha configurável)
-  const ADMIN_PASS = 'admin2025'; // altere para sua senha
-  const adminLogin = document.getElementById('admin-login');
-  const adminLogout = document.getElementById('admin-logout');
-  const adminPanel = document.getElementById('admin-panel');
-  const answersList = document.getElementById('answers-list');
-  const exportBtn = document.getElementById('export-answers');
-  const clearBtn = document.getElementById('clear-answers');
-
-  function renderAnswers(){
-    const arr = readStored();
-    if(!arr.length) answersList.innerHTML = '<p class="text-muted">Nenhuma resposta registrada.</p>';
-    else answersList.innerHTML = arr.map((r,idx)=>{
-      return `<div class="p-2 mb-2" style="border-bottom:1px solid rgba(0,0,0,.06)"><strong>#${idx+1} - ${new Date(r.timestamp).toLocaleString()}</strong><div style="font-size:.95rem">${Object.keys(r.answers).map(k=> k+': '+(r.answers[k]||'-')).join(' | ')}</div><div style="margin-top:6px">${r.freeText ? '<em>'+escapeHtml(r.freeText)+'</em>' : '<span class=\"text-muted\">(sem comentário)</span>'}</div></div>`;
-    }).join('');
-  }
-
-  function escapeHtml(s){ return (s||'').replace(/[&<>\"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[m]); }
-
-  adminLogin.addEventListener('click', ()=>{
-    const pass = document.getElementById('admin-pass').value || '';
-  if(pass !== ADMIN_PASS){ showToast('Senha incorreta'); return; }
-    adminPanel.style.display='block'; renderAnswers();
-  });
-  adminLogout.addEventListener('click', ()=>{ adminPanel.style.display='none'; });
-
-  exportBtn.addEventListener('click', ()=>{
-    const arr = readStored();
-    const header = ['Timestamp','FreeText', ...Array.from({length:12},(_,i)=>'Q'+(i+1))];
-    const csv = [ header.join(',') ];
-    const esc = v => '"'+ String(v || '').replace(/"/g,'""') +'"';
-    arr.forEach(r=>{
-      const row = [ esc(r.timestamp), esc(r.freeText), ...Array.from({length:12},(_,i)=> esc(r.answers['q'+(i+1)] || '')) ];
-      csv.push(row.join(','));
-    });
-    const blob = new Blob([csv.join('\n')], {type:'text/csv'});
-    const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='feedback-respostas.csv'; a.click(); URL.revokeObjectURL(url);
-  });
-
-  clearBtn.addEventListener('click', ()=>{ if(window.confirm('Apagar todas as respostas?')){ saveStored([]); renderAnswers(); showToast('Respostas apagadas.'); } });
-
-})();
-</script>
-
-<script src="sw.js"></script>
+<script src="js/core.js"></script>
+<script src="js/feedback.js"></script>
 </body>
 </html>

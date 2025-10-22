@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conheça a Bíblia - Versículos Inspiradores e Estudos Bíblicos</title>
 
-  <!-- Meta Tags SEO -->
+  <!-- Otimizações Mobile -->
+<meta name="theme-color" content="#f9d342">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Conheça a Bíblia">
+
+<!-- Preload crítico para mobile -->
+<link rel="preload" href="css/estilo.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="css/estilo.css"></noscript>
+
+<!-- Preload das fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <meta name="description" content="Conheça a Bíblia Sagrada: versículos inspiradores, galeria de locais bíblicos, estudos e recursos para fortalecer sua fé. Projeto DSA1 INF1FT.">
   <meta name="keywords" content="Bíblia, versículos, fé, cristianismo, estudo bíblico, Jesus, Deus, religião, espiritualidade">
   <meta name="author" content="INF1FT">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Conheça a Bíblia - Versículos e Estudos Inspiradores">
   <meta property="og:description" content="Explore a Bíblia Sagrada com versículos inspiradores, galeria de locais bíblicos e recursos de estudo para fortalecer sua fé">
   <meta property="og:image" content="./Images/Belem.jpeg">
@@ -20,12 +31,10 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Conheça a Bíblia">
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Conheça a Bíblia - Versículos e Estudos">
   <meta name="twitter:description" content="Explore a Bíblia Sagrada com versículos inspiradores e recursos de estudo">
 
-  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -41,19 +50,16 @@
   }
   </script>
 
-  <!-- Manifest e Ícones -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   
-  <!-- Preload crítico -->
   <link rel="preload" href="css/estilo.css" as="style">
   <link rel="preload" href="js/core.js" as="script">
 
-  <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/estilo.css" />
 
-  <!-- Fallback para fonts -->
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   </noscript>
@@ -92,7 +98,6 @@
               <input id="gallery-search" class="form-control" type="search" placeholder="Pesquisar..." aria-label="Campo de pesquisa" />
             </div>
             <button id="gallery-clear" type="button" class="btn btn-outline-light btn-sm ms-2">Limpar</button>
-            <button id="import-favs" type="button" class="btn btn-outline-light btn-sm ms-2" title="Importar favoritos">Importar</button>
             <div id="search-count" class="ms-2 text-warning small" aria-live="polite"></div>
           </form>
         </div>
@@ -101,16 +106,16 @@
   </header>
 
   <main class="site-shell" aria-label="Conteúdo do site">
-
     <section id="home" class="hero text-center" tabindex="-1" aria-labelledby="home-title">
       <div class="container py-5">
         <div class="intro">
           <h1 id="home-title" class="mb-4">Conheça a Bíblia</h1>
           <p>Descubra a história, os ensinamentos e os personagens que marcaram a fé cristã.</p>
           <div class="d-flex gap-3 justify-content-center flex-wrap">
-            <a href=".html" class="btn btn-primary mt-3">Ver Versículos Inspiradores</a>
+            <a href="versiculos.html" class="btn btn-primary mt-3">Ver Versículos Inspiradores</a>
             <a href="livros-da-biblia.html" class="btn btn-primary mt-3">Ver Livros da Bíblia</a>
           </div>
+        </div>
       </div>
     </section>
 
@@ -123,11 +128,6 @@
             <p>É composta por 66 livros divididos entre Antigo e Novo Testamento.</p>
             <p>A Bíblia é um conjunto de livros sagrados do cristianismo.</p>
             <p>Dividida em Antigo e Novo Testamento, contém histórias, leis e ensinamentos.</p>
-            <p>O Antigo Testamento narra a criação, os profetas e a história de Israel.</p>
-            <p>O Novo Testamento foca na vida, morte e ressurreição de Jesus Cristo.</p>
-            <p>É considerada a palavra de Deus revelada à humanidade.</p>
-            <p>Inspirou milhões ao longo dos séculos com fé, ética e esperança.</p>
-            <p>Traduzida para milhares de idiomas, é o livro mais lido do mundo.</p>
           </div>
         </article>
         <article class="col-md-4" aria-labelledby="info-card-2-title">
@@ -136,11 +136,6 @@
             <p>A Bíblia foi escrita por mais de 40 autores ao longo de 1600 anos.</p>
             <p>Entre eles estavam reis, profetas, pescadores, pastores e médicos.</p>
             <p>Moisés escreveu o Pentateuco; Davi compôs muitos Salmos.</p>
-            <p>Salomão deixou Provérbios, Eclesiastes e Cantares.</p>
-            <p>Os evangelhos foram registrados por Mateus, Marcos, Lucas e João.</p>
-            <p>Paulo contribuiu com diversas cartas às igrejas do Novo Testamento.</p>
-            <p>Apesar de diferentes origens, todos compartilharam a mesma fé e propósito.</p>
-            <p>Todos foram inspirados por Deus para transmitir sua mensagem ao mundo.</p>
           </div>
         </article>
         <article class="col-md-4" aria-labelledby="info-card-3-title">
@@ -149,11 +144,6 @@
             <p>É o livro mais traduzido e distribuído do mundo.</p>
             <p>Traduzida para mais de 3.000 idiomas e dialetos.</p>
             <p>Inclui versões completas e parciais em diversas línguas.</p>
-            <p>A Septuaginta foi a primeira tradução, do hebraico para o grego.</p>
-            <p>A Vulgata, em latim, foi usada por séculos na Igreja Católica.</p>
-            <p>Hoje há traduções modernas como NVI, ARA e King James.</p>
-            <p>As traduções buscam fidelidade ao texto original e clareza ao leitor.</p>
-            <p>Elas tornam a mensagem acessível a diferentes culturas e gerações.</p>
           </div>
         </article>
       </div>
@@ -162,151 +152,199 @@
     <section id="mais-informacoes" class="fade-in bg-white container py-5" aria-labelledby="more-info-title">
       <h2 id="more-info-title" class="mb-4 text-center">Mais sobre a Bíblia</h2>
       <div class="info-grid">
-        <article class="card info-card card-led" tabindex="0" role="article" data-detail="A formação da Bíblia envolveu processos históricos e debates sobre quais escritos seriam incluídos no cânon. Os textos bíblicos surgiram em épocas diferentes. Alguns foram escritos em tempos de guerra, outros em paz. Foram preservados por escribas e líderes religiosos, copiados manualmente com extremo cuidado por séculos. O cânon foi definido por critérios de fé e tradição. Livros apócrifos foram deixados fora por decisão teológica. A ordem dos livros varia entre tradições cristãs e judaicas. Descobertas arqueológicas reforçam sua autenticidade.">
-          <img src="Images/Biblia.jfif" alt="Contexto histórico" loading="lazy" />
-          <div class="card-body">
-            <h5>A Formação</h5>
-            <p>Os textos bíblicos surgiram em épocas diferentes.</p>
-            <p>Alguns foram escritos em tempos de guerra, outros em paz.</p>
-          </div>
-        </article>
-        <article class="card info-card card-led" tabindex="0" role="article" data-detail="Manuscritos antigos preservam variações textuais; sua comparação é vital para estudos críticos do texto. A importância dos manuscritos hebraicos, gregos e das traduções antigas é imensa para a fidelidade das traduções modernas.">
-          <img src="Images/Manuscritos.jfif" alt="Manuscritos antigos" loading="lazy" />
-          <div class="card-body">
-            <h5>Manuscritos</h5>
-            <p>Importância dos manuscritos hebraicos, gregos e das traduções antigas.</p>
-          </div>
-        </article>
-        <article class="card info-card card-led" tabindex="0" role="article" data-detail="O contexto geográfico ajuda a entender eventos e referências culturais nas narrativas bíblicas. Conhecer os locais-chave e seu papel nas histórias enriquece a leitura e a compreensão dos textos.">
-          <img src="Images/ContextoGeografico.jfif" alt="Contexto geográfico" loading="lazy" />
-          <div class="card-body">
-            <h5>Contexto Geográfico</h5>
-            <p>Locais-chave e seu papel nas narrativas bíblicas.</p>
-          </div>
-        </article>
-        <article class="card info-card card-led" tabindex="0" role="article" data-detail="Tradições comunitárias e litúrgicas moldam como os textos são lidos e aplicados ao longo do tempo. As tradições religiosas influenciam diretamente a interpretação e a vivência da fé.">
-          <img src="Images/Tradicoes.jfif" alt="Tradições" loading="lazy" />
-          <div class="card-body">
-            <h5>Tradições</h5>
-            <p>Como tradições religiosas influenciam a interpretação dos textos.</p>
-          </div>
-        </article>
+        <a href="https://www.bibliaon.com/historia_da_biblia/" target="_blank" class="card-link">
+          <article class="card info-card card-led" tabindex="0" role="article" data-title="A Formação">
+            <img src="Images/Biblia.jfif" alt="Contexto histórico" loading="lazy" />
+            <div class="card-body">
+              <h5>A Formação</h5>
+              <p>Os textos bíblicos surgiram em épocas diferentes.</p>
+              <p>Alguns foram escritos em tempos de guerra, outros em paz.</p>
+            </div>
+          </article>
+        </a>
+        <a href="https://www.bibliaon.com/manuscritos_biblicos/" target="_blank" class="card-link">
+          <article class="card info-card card-led" tabindex="0" role="article" data-title="Manuscritos">
+            <img src="Images/Manuscritos.jfif" alt="Manuscritos antigos" loading="lazy" />
+            <div class="card-body">
+              <h5>Manuscritos</h5>
+              <p>Importância dos manuscritos hebraicos, gregos e das traduções antigas.</p>
+            </div>
+          </article>
+        </a>
+        <a href="https://www.bibliaon.com/terra_santa/" target="_blank" class="card-link">
+          <article class="card info-card card-led" tabindex="0" role="article" data-title="Contexto Geográfico">
+            <img src="Images/ContextoGeografico.jfif" alt="Contexto geográfico" loading="lazy" />
+            <div class="card-body">
+              <h5>Contexto Geográfico</h5>
+              <p>Locais-chave e seu papel nas narrativas bíblicas.</p>
+            </div>
+          </article>
+        </a>
+        <a href="https://www.bibliaon.com/tradicoes_biblicas/" target="_blank" class="card-link">
+          <article class="card info-card card-led" tabindex="0" role="article" data-title="Tradições">
+            <img src="Images/Tradicoes.jfif" alt="Tradições" loading="lazy" />
+            <div class="card-body">
+              <h5>Tradições</h5>
+              <p>Como tradições religiosas influenciam a interpretação dos textos.</p>
+            </div>
+          </article>
+        </a>
       </div>
     </section>
 
     <section id="temas" class="fade-in container py-5" aria-labelledby="temas-title">
         <h2 id="temas-title" class="mb-4 text-center">Temas importantes</h2>
         <div class="gallery-grid">
-            <article class="gallery-card card-led card-media" data-title="Parábolas" data-detail="Parábolas são histórias curtas que transmitem verdades morais e espirituais de maneira acessível." tabindex="0">
-                <img src="Images/parabola.jfif" alt="Parábolas" loading="lazy">
-                <div class="gallery-caption">Parábolas — <em>Histórias com lição moral</em></div>
-            </article>
-            <article class="gallery-card card-led card-media" data-title="Milagres" data-detail="Milagres são eventos descritos como intervenções divinas que reforçam fé e mensagem dos textos." tabindex="0">
-                <img src="Images/Milagres.jfif" alt="Milagres" loading="lazy">
-                <div class="gallery-caption">Milagres — <em>Eventos extraordinários</em></div>
-            </article>
-            <article class="gallery-card card-led card-media" data-video-id="ckVR3YJUTXY" data-title="Introdução Vídeo" data-detail="Vídeo introdutório cobrindo pontos-chave sobre a Bíblia e seu impacto histórico." tabindex="0">
-                <img src="Images/IntroucaoABiblia.jfif" alt="Vídeo: Introdução" loading="lazy">
-                <div class="gallery-caption">Vídeo: Introdução — <em>Clique para assistir</em></div>
-            </article>
-            <article class="gallery-card card-led card-media" data-video-id="ckVR3YJUTXY" data-title="A Vida de Jesus" data-detail="Resumo dos eventos centrais da vida de Jesus, incluindo ensino, milagres e ressurreição." tabindex="0">
-                <img src="Images/VidadeCristo.jfif" alt="A Vida de Jesus" loading="lazy">
-                <div class="gallery-caption">A Vida de Jesus — <em>Clique para ver</em></div>
-            </article>
+            <a href="https://www.bibliaon.com/parabolas_de_jesus/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Parábolas" tabindex="0">
+                    <img src="Images/parabola.jfif" alt="Parábolas" loading="lazy">
+                    <div class="gallery-caption">Parábolas — <em>Histórias com lição moral</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/milagres_de_jesus/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Milagres" tabindex="0">
+                    <img src="Images/Milagres.jfif" alt="Milagres" loading="lazy">
+                    <div class="gallery-caption">Milagres — <em>Eventos extraordinários</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/introducao_biblia/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-video-id="ckVR3YJUTXY" data-title="Introdução Vídeo" tabindex="0">
+                    <img src="Images/IntroucaoABiblia.jfif" alt="Vídeo: Introdução" loading="lazy">
+                    <div class="gallery-caption">Vídeo: Introdução — <em>Clique para assistir</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/vida_de_jesus/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-video-id="ckVR3YJUTXY" data-title="A Vida de Jesus" tabindex="0">
+                    <img src="Images/VidadeCristo.jfif" alt="A Vida de Jesus" loading="lazy">
+                    <div class="gallery-caption">A Vida de Jesus — <em>Clique para ver</em></div>
+                </article>
+            </a>
         </div>
     </section>
 
     <section id="cronologia" class="fade-in bg-white container py-5" aria-labelledby="cronologia-title">
         <h2 id="cronologia-title" class="mb-4 text-center">Cronologia Bíblica</h2>
         <div class="info-grid">
-            <article class="info-card card-led" tabindex="0">
-                <img src="Images/Patriarcas.jfif" alt="Patriarcas" loading="lazy">
-                <div class="card-body">
-                    <h5>Patriarcas</h5>
-                    <p>Abraão, Isaque e Jacó — início das promessas.</p>
-                </div>
-            </article>
-            <article class="info-card card-led" tabindex="0">
-                <img src="Images/Moises.jfif" alt="Êxodo" loading="lazy">
-                <div class="card-body">
-                    <h5>Êxodo</h5>
-                    <p>Moises liderando a saída do Egito.</p>
-                </div>
-            </article>
-            <article class="info-card card-led" tabindex="0">
-                <img src="Images/Reinos.jfif" alt="Reinos" loading="lazy">
-                <div class="card-body">
-                    <h5>Reinos</h5>
-                    <p>Período dos reinos de Israel e Judá.</p>
-                </div>
-            </article>
-            <article class="info-card card-led" tabindex="0">
-                <img src="Images/a-vida-de-Jesus.jpg" alt="Vida de Jesus" loading="lazy">
-                <div class="card-body">
-                    <h5>Vida de Jesus</h5>
-                    <p>Ministério, milagres e ensinamentos.</p>
-                </div>
-            </article>
+            <a href="https://www.bibliaon.com/patriarcas/" target="_blank" class="card-link">
+                <article class="info-card card-led" tabindex="0" data-title="Patriarcas">
+                    <img src="Images/Patriarcas.jfif" alt="Patriarcas" loading="lazy">
+                    <div class="card-body">
+                        <h5>Patriarcas</h5>
+                        <p>Abraão, Isaque e Jacó — início das promessas.</p>
+                    </div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/exodo/" target="_blank" class="card-link">
+                <article class="info-card card-led" tabindex="0" data-title="Êxodo">
+                    <img src="Images/Moises.jfif" alt="Êxodo" loading="lazy">
+                    <div class="card-body">
+                        <h5>Êxodo</h5>
+                        <p>Moises liderando a saída do Egito.</p>
+                    </div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/reinos_de_israel/" target="_blank" class="card-link">
+                <article class="info-card card-led" tabindex="0" data-title="Reinos">
+                    <img src="Images/Reinos.jfif" alt="Reinos" loading="lazy">
+                    <div class="card-body">
+                        <h5>Reinos</h5>
+                        <p>Período dos reinos de Israel e Judá.</p>
+                    </div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/vida_de_jesus/" target="_blank" class="card-link">
+                <article class="info-card card-led" tabindex="0" data-title="Vida de Jesus">
+                    <img src="Images/a-vida-de-Jesus.jpg" alt="Vida de Jesus" loading="lazy">
+                    <div class="card-body">
+                        <h5>Vida de Jesus</h5>
+                        <p>Ministério, milagres e ensinamentos.</p>
+                    </div>
+                </article>
+            </a>
         </div>
     </section>
 
     <section id="personagens" class="fade-in container py-5" aria-labelledby="personagens-title">
         <h2 id="personagens-title" class="mb-4 text-center">Personagens Importantes</h2>
         <div class="gallery-grid">
-            <article class="gallery-card card-led" data-title="Jesus" data-detail="Jesus é a figura central do Novo Testamento. Seus ensinamentos, parábolas e sacrifício na cruz são a base da fé cristã." tabindex="0">
-                <img src="Images/Jesus.jpg" alt="Jesus" loading="lazy">
-                <div class="gallery-caption">Jesus — Figura central; seus ensinamentos e sacrifício moldaram o cristianismo.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Maria" data-detail="Maria, mãe de Jesus, é venerada por sua humildade e obediência; muitas tradições a consideram modelo de fé." tabindex="0">
-                <img src="Images/Maria.jpg" alt="Maria" loading="lazy">
-                <div class="gallery-caption">Maria — Mãe de Jesus; exemplo de fé e devoção na tradição cristã.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Moisés" data-detail="Moisés liderou o êxodo e recebeu a lei no Monte Sinai; é uma das figuras mais influentes do Antigo Testamento." tabindex="0">
-                <img src="Images/moises10.jpg" alt="Moisés" loading="lazy">
-                <div class="gallery-caption">Moisés — Líder que conduziu Israel na saída do Egito e recebeu os Dez Mandamentos.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Davi" data-detail="Davi foi rei de Israel e autor de salmos; sua vida mistura liderança, poesia e conflitos pessoais que inspiram estudos teológicos." tabindex="0">
-                <img src="Images/davi.jpg" alt="Davi" loading="lazy">
-                <div class="gallery-caption">Davi — Rei e poeta; autor de muitos salmos e figura importante da monarquia.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Paulo" data-detail="Paulo viajou extensivamente e escreveu cartas aos primeiros cristãos; sua teologia moldou grande parte do pensamento cristão." tabindex="0">
-                <img src="Images/paulo.jpg" alt="Paulo" loading="lazy">
-                <div class="gallery-caption">Paulo — Apóstolo missionário; escreveu cartas que influenciam a teologia cristã.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Pedro" data-detail="Pedro, um dos doze discípulos, foi uma das principais lideranças da igreja primitiva e figura-chave nos evangelhos." tabindex="0">
-                <img src="Images/pedro.jpg" alt="Pedro" loading="lazy">
-                <div class="gallery-caption">Pedro — Discípulo próximo de Jesus; liderança na igreja primitiva.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Maria Madalena" data-detail="Maria Madalena é lembrada como seguidora dedicada de Jesus e testemunha da ressurreição; sua figura ganhou atenção em estudos históricos." tabindex="0">
-                <img src="Images/maria-madalena.jpg" alt="Maria Madalena" loading="lazy">
-                <div class="gallery-caption">Maria Madalena — Seguidora de Jesus; presente em momentos-chave da narrativa evangélica.</div>
-            </article>
-            <article class="gallery-card card-led" data-title="Ester" data-detail="Ester foi rainha e agiu com coragem para proteger seu povo; sua história inspira reflexões sobre liderança e coragem." tabindex="0">
-                <img src="Images/ester.jpg" alt="Ester" loading="lazy">
-                <div class="gallery-caption">Ester — Rainha que salvou seu povo; símbolo de coragem e intercessão.</div>
-            </article>
+            <a href="https://www.bibliaon.com/jesus_cristo/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Jesus" tabindex="0">
+                    <img src="Images/Jesus.jpg" alt="Jesus" loading="lazy">
+                    <div class="gallery-caption">Jesus — Figura central; seus ensinamentos e sacrifício moldaram o cristianismo.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/maria_mae_de_jesus/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Maria" tabindex="0">
+                    <img src="Images/Maria.jpg" alt="Maria" loading="lazy">
+                    <div class="gallery-caption">Maria — Mãe de Jesus; exemplo de fé e devoção na tradição cristã.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/moises/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Moisés" tabindex="0">
+                    <img src="Images/moises10.jpg" alt="Moisés" loading="lazy">
+                    <div class="gallery-caption">Moisés — Líder que conduziu Israel na saída do Egito e recebeu os Dez Mandamentos.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/davi/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Davi" tabindex="0">
+                    <img src="Images/davi.jpg" alt="Davi" loading="lazy">
+                    <div class="gallery-caption">Davi — Rei e poeta; autor de muitos salmos e figura importante da monarquia.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/paulo_apostolo/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Paulo" tabindex="0">
+                    <img src="Images/paulo.jpg" alt="Paulo" loading="lazy">
+                    <div class="gallery-caption">Paulo — Apóstolo missionário; escreveu cartas que influenciam a teologia cristã.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/pedro_apostolo/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Pedro" tabindex="0">
+                    <img src="Images/pedro.jpg" alt="Pedro" loading="lazy">
+                    <div class="gallery-caption">Pedro — Discípulo próximo de Jesus; liderança na igreja primitiva.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/maria_madalena/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Maria Madalena" tabindex="0">
+                    <img src="Images/maria-madalena.jpg" alt="Maria Madalena" loading="lazy">
+                    <div class="gallery-caption">Maria Madalena — Seguidora de Jesus; presente em momentos-chave da narrativa evangélica.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/ester/" target="_blank" class="card-link">
+                <article class="gallery-card card-led" data-title="Ester" tabindex="0">
+                    <img src="Images/ester.jpg" alt="Ester" loading="lazy">
+                    <div class="gallery-caption">Ester — Rainha que salvou seu povo; símbolo de coragem e intercessão.</div>
+                </article>
+            </a>
         </div>
     </section>
 
     <section id="estudos" class="fade-in container py-5" aria-labelledby="estudos-title">
         <h2 id="estudos-title" class="mb-4 text-center">Estudos & Recursos</h2>
         <div class="gallery-grid">
-            <article class="gallery-card card-led card-media" data-title="Guia de Estudo" tabindex="0">
-                <img src="Images/estudo-biblico.jpg" alt="Guia de Estudo" loading="lazy">
-                <div class="gallery-caption">Guia de Estudo — Baixe o material.</div>
-            </article>
-            <article class="gallery-card card-led card-media" data-title="Mapas Bíblicos" tabindex="0">
-                <img src="Images/mapa.jpg" alt="Mapas Bíblicos" loading="lazy">
-                <div class="gallery-caption">Mapas — Explore locais históricos.</div>
-            </article>
-            <article class="gallery-card card-led card-media" data-title="Comparativo de Traduções" tabindex="0">
-                <img src="Images/traducoes.jpg" alt="Comparativo de Traduções" loading="lazy">
-                <div class="gallery-caption">Comparativo — Variações entre traduções.</div>
-            </article>
-            <article class="gallery-card card-led card-media" data-title="Estudos em vídeo" data-video-id="ckVR3YJUTXY" tabindex="0">
-                <img src="Images/estudo-biblia.jpg" alt="Estudos em vídeo" loading="lazy">
-                <div class="gallery-caption">Estudos em vídeo — Assista aulas curtas.</div>
-            </article>
+            <a href="https://www.bibliaon.com/estudo_biblico/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Guia de Estudo" tabindex="0">
+                    <img src="Images/estudo-biblico.jpg" alt="Guia de Estudo" loading="lazy">
+                    <div class="gallery-caption">Guia de Estudo — Baixe o material.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/mapas_biblicos/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Mapas Bíblicos" tabindex="0">
+                    <img src="Images/mapa.jpg" alt="Mapas Bíblicos" loading="lazy">
+                    <div class="gallery-caption">Mapas — Explore locais históricos.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/traducoes_biblicas/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Comparativo de Traduções" tabindex="0">
+                    <img src="Images/traducoes.jpg" alt="Comparativo de Traduções" loading="lazy">
+                    <div class="gallery-caption">Comparativo — Variações entre traduções.</div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/estudos_biblicos/" target="_blank" class="card-link">
+                <article class="gallery-card card-led card-media" data-title="Estudos em vídeo" data-video-id="ckVR3YJUTXY" tabindex="0">
+                    <img src="Images/estudo-biblia.jpg" alt="Estudos em vídeo" loading="lazy">
+                    <div class="gallery-caption">Estudos em vídeo — Assista aulas curtas.</div>
+                </article>
+            </a>
         </div>
     </section>
 
@@ -315,56 +353,78 @@
             <h2 id="galeria-title" class="mb-0 text-center">Galeria Bíblica</h2>
         </div>
         <div id="gallery-cards" class="gallery-grid">
-            <article class="gallery-card" data-title="Belém">
-                <img src="Images/Belem.jpeg" alt="Belém" loading="lazy">
-                <div class="gallery-caption">Belém — <em>Lucas 2:4-7</em></div>
-            </article>
-            <article class="gallery-card" data-title="Betânia">
-                <img src="Images/betania.jpg" alt="Betânia" loading="lazy">
-                <div class="gallery-caption">Betânia — <em>João 11:1-44</em></div>
-            </article>
-            <article class="gallery-card" data-title="Cafarnaum">
-                <img src="Images/Cafarnaum.jpg" alt="Cafarnaum" loading="lazy">
-                <div class="gallery-caption">Cafarnaum — <em>Mateus 8:5-13</em></div>
-            </article>
-            <article class="gallery-card" data-title="Gólgota">
-                <img src="Images/golgota.jfif" alt="Gólgota" loading="lazy">
-                <div class="gallery-caption">Gólgota — <em>João 19:17-18</em></div>
-            </article>
-            <article class="gallery-card" data-title="Jericó">
-                <img src="Images/jerico.jfif" alt="Jericó" loading="lazy">
-                <div class="gallery-caption">Jericó — <em>Marcos 10:46-52</em></div>
-            </article>
-            <article class="gallery-card" data-title="Jerusalém">
-                <img src="Images/Jerusalem.jpg" alt="Jerusalém" loading="lazy">
-                <div class="gallery-caption">Jerusalém — <em>Lucas 24:1-7</em></div>
-            </article>
-            <article class="gallery-card" data-title="Mar da Galileia">
-                <img src="Images/mar-da-galileia.jpg" alt="Mar da Galileia" loading="lazy">
-                <div class="gallery-caption">Mar da Galileia — <em>Mateus 14:22-33</em></div>
-            </article>
-            <article class="gallery-card" data-title="Monte das Oliveiras">
-                <img src="Images/monte-das-oliveiras.jpg" alt="Monte das Oliveiras" loading="lazy">
-                <div class="gallery-caption">Monte das Oliveiras — <em>Lucas 22:39-46</em></div>
-            </article>
-            <article class="gallery-card" data-title="Muro das Lamentações">
-                <img src="Images/muro-das-lamentacoes.jfif" alt="Muro das Lamentações" loading="lazy">
-                <div class="gallery-caption">Muro das Lamentações — <em>Lucas 19:45-48</em></div>
-            </article>
-            <article class="gallery-card" data-title="Nazaré">
-                <img src="Images/nazare.jpeg" alt="Nazaré" loading="lazy">
-                <div class="gallery-caption">Nazaré — <em>Lucas 2:39-40</em></div>
-            </article>
-            <article class="gallery-card" data-title="Rio Jordão">
-                <img src="Images/rio-jordao-israel.jpg" alt="Rio Jordão" loading="lazy">
-                <div class="gallery-caption">Rio Jordão — <em>Mateus 3:13-17</em></div>
-            </article>
+            <a href="https://www.bibliaon.com/belen/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Belém">
+                    <img src="Images/Belem.jpeg" alt="Belém" loading="lazy">
+                    <div class="gallery-caption">Belém — <em>Lucas 2:4-7</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/betania/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Betânia">
+                    <img src="Images/betania.jpg" alt="Betânia" loading="lazy">
+                    <div class="gallery-caption">Betânia — <em>João 11:1-44</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/cafarnaum/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Cafarnaum">
+                    <img src="Images/Cafarnaum.jpg" alt="Cafarnaum" loading="lazy">
+                    <div class="gallery-caption">Cafarnaum — <em>Mateus 8:5-13</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/golgota/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Gólgota">
+                    <img src="Images/golgota.jfif" alt="Gólgota" loading="lazy">
+                    <div class="gallery-caption">Gólgota — <em>João 19:17-18</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/jerico/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Jericó">
+                    <img src="Images/jerico.jfif" alt="Jericó" loading="lazy">
+                    <div class="gallery-caption">Jericó — <em>Marcos 10:46-52</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/jerusalem/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Jerusalém">
+                    <img src="Images/Jerusalem.jpg" alt="Jerusalém" loading="lazy">
+                    <div class="gallery-caption">Jerusalém — <em>Lucas 24:1-7</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/mar_da_galileia/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Mar da Galileia">
+                    <img src="Images/mar-da-galileia.jpg" alt="Mar da Galileia" loading="lazy">
+                    <div class="gallery-caption">Mar da Galileia — <em>Mateus 14:22-33</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/monte_das_oliveiras/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Monte das Oliveiras">
+                    <img src="Images/monte-das-oliveiras.jpg" alt="Monte das Oliveiras" loading="lazy">
+                    <div class="gallery-caption">Monte das Oliveiras — <em>Lucas 22:39-46</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/muro_das_lamentacoes/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Muro das Lamentações">
+                    <img src="Images/muro-das-lamentacoes.jfif" alt="Muro das Lamentações" loading="lazy">
+                    <div class="gallery-caption">Muro das Lamentações — <em>Lucas 19:45-48</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/nazare/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Nazaré">
+                    <img src="Images/nazare.jpeg" alt="Nazaré" loading="lazy">
+                    <div class="gallery-caption">Nazaré — <em>Lucas 2:39-40</em></div>
+                </article>
+            </a>
+            <a href="https://www.bibliaon.com/rio_jordao/" target="_blank" class="card-link">
+                <article class="gallery-card" data-title="Rio Jordão">
+                    <img src="Images/rio-jordao-israel.jpg" alt="Rio Jordão" loading="lazy">
+                    <div class="gallery-caption">Rio Jordão — <em>Mateus 3:13-17</em></div>
+                </article>
+            </a>
         </div>
     </section>
 
     <section id="midia" class="fade-in bg-white container py-5" aria-labelledby="midia-title">
         <h2 id="midia-title" class="mb-4 text-center">Vídeo sobre a Bíblia</h2>
-        <div class="video-card led-frame" id="video-card" role="button" aria-label="Abrir vídeo sobre a Bíblia" data-video-id="ckVR3YJUTXY" data-thumb="https://i.ytimg.com/vi/ckVR3YJUTXY/maxresdefault.jpg">
+        <div class="video-card led-frame" id="video-card" role="button" aria-label="Abrir vídeo sobre a Bíblia" data-video-id="ckVR3YJUTXY">
             <img src="Images/Belem.jpeg" alt="Thumbnail do vídeo" class="video-thumb" id="video-thumb" loading="lazy">
             <div class="play-overlay" aria-hidden="true">
                 <div class="play-button">
@@ -397,7 +457,7 @@
     <div class="video-modal" role="document">
         <h3 id="video-title" class="sr-only">Player de Vídeo</h3>
         <div class="video-wrapper">
-            <iframe id="video-iframe" src="about:blank" data-base-src="https://www.youtube.com/embed/ckVR3YJUTXY?si=wnjfsX2AsKD-bK7m&amp;rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe id="video-iframe" src="about:blank" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-footer">
             <button id="close-video" class="close-video-btn">Fechar</button>
@@ -417,298 +477,33 @@
     </div>
   </div>
 
-  <div id="detail-modal" class="lb-backdrop" role="dialog" aria-hidden="true" aria-labelledby="detail-title">
-    <div class="lb-content card p-3" role="document">
-      <h3 id="detail-title"></h3>
-      <p id="detail-body"></p>
-      <p class="text-center"><a id="detail-source" class="btn btn-sm btn-secondary" href="#" target="_blank" rel="noopener">Fonte / Ler mais</a></p>
-      <div class="d-flex justify-content-center mt-3"><button id="detail-close" class="btn btn-danger">Fechar</button></div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/gallery.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  
-  <script>
-    /* =========================
-       Script principal corrigido
-       ========================= */
-    document.addEventListener('DOMContentLoaded', function() {
-      'use strict';
-      
-      const $ = sel => document.querySelector(sel);
-      const $$ = sel => Array.from(document.querySelectorAll(sel));
-      
-      // Sistema de tema
-      const themeToggle = $('#themeToggle');
-      const htmlEl = document.documentElement;
-      
-      // Carregar tema salvo ou usar padrão
-      const currentTheme = localStorage.getItem('theme') || 'dark';
-      htmlEl.setAttribute('data-theme', currentTheme);
-      themeToggle.setAttribute('aria-pressed', currentTheme === 'dark' ? 'false' : 'true');
-      
-      // Função para alternar tema
-      function toggleTheme() {
-        const current = htmlEl.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        
-        htmlEl.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        themeToggle.setAttribute('aria-pressed', next === 'dark' ? 'false' : 'true');
-        
-        console.log('Tema alterado para:', next);
-      }
-      
-      // Adicionar evento de clique
-      if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-        console.log('Evento de tema registrado');
-      } else {
-        console.error('Botão de tema não encontrado');
-      }
-      
-      // Restante do código existente...
-      const lightbox = $('#lightbox');
-      const lbImage = $('#lb-image');
-      const lbCaption = $('#lb-caption');
-      const lbClose = $('#lb-close');
-      const lbPrev = $('#lb-prev');
-      const lbNext = $('#lb-next');
-      
-      const galleryCards = $$('.gallery-card');
-      let currentIndex = 0;
-      
-      function openLightbox(index) {
-        const card = galleryCards[index];
-        const img = card.querySelector('img');
-        const caption = card.querySelector('.gallery-caption');
-        
-        lbImage.src = img.src;
-        lbImage.alt = img.alt;
-        lbCaption.textContent = caption?.textContent || '';
-        
-        currentIndex = index;
-        lightbox.setAttribute('aria-hidden', 'false');
-        lightbox.style.display = 'flex';
-        
-        updateNavButtons();
-      }
-      
-      function closeLightbox() {
-        lightbox.setAttribute('aria-hidden', 'true');
-        lightbox.style.display = 'none';
-      }
-      
-      function updateNavButtons() {
-        lbPrev.style.visibility = currentIndex > 0 ? 'visible' : 'hidden';
-        lbNext.style.visibility = currentIndex < galleryCards.length - 1 ? 'visible' : 'hidden';
-      }
-      
-      galleryCards.forEach((card, index) => {
-        card.addEventListener('click', () => openLightbox(index));
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openLightbox(index);
-          }
-        });
-      });
-      
-      lbClose.addEventListener('click', closeLightbox);
-      lbPrev.addEventListener('click', () => {
-        if (currentIndex > 0) openLightbox(currentIndex - 1);
-      });
-      lbNext.addEventListener('click', () => {
-        if (currentIndex < galleryCards.length - 1) openLightbox(currentIndex + 1);
-      });
-      
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-      });
-      
-      document.addEventListener('keydown', (e) => {
-        if (lightbox.style.display === 'flex') {
-          if (e.key === 'Escape') closeLightbox();
-          if (e.key === 'ArrowLeft' && currentIndex > 0) openLightbox(currentIndex - 1);
-          if (e.key === 'ArrowRight' && currentIndex < galleryCards.length - 1) openLightbox(currentIndex + 1);
-        }
-      });
-      
-      // Sistema de busca
-      const searchInput = $('#gallery-search');
-      const clearBtn = $('#gallery-clear');
-      const searchCount = $('#search-count');
-      
-      function performSearch() {
-        const term = searchInput.value.trim().toLowerCase();
-        let count = 0;
-        
-        galleryCards.forEach(card => {
-          const text = card.textContent.toLowerCase();
-          const matches = text.includes(term);
-          card.style.display = matches ? 'block' : 'none';
-          if (matches) count++;
-        });
-        
-        searchCount.textContent = term ? `${count} resultado(s)` : '';
-        searchCount.setAttribute('aria-live', 'polite');
-      }
-      
-      searchInput?.addEventListener('input', performSearch);
-      clearBtn?.addEventListener('click', () => {
-        searchInput.value = '';
-        performSearch();
-        searchInput.focus();
-      });
-      
-      // Sistema de favoritos
-      const importFavs = $('#import-favs');
-      const importInput = $('#import-favs-input');
-      
-      importFavs?.addEventListener('click', () => importInput?.click());
-      
-      importInput?.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          try {
-            const data = JSON.parse(event.target.result);
-            showToast('Favoritos importados com sucesso!', 'success');
-            console.log('Dados importados:', data);
-          } catch (err) {
-            showToast('Erro ao importar favoritos', 'error');
-            console.error('Erro ao importar:', err);
-          }
-        };
-        reader.readAsText(file);
-        e.target.value = '';
-      });
-      
-      // Sistema de toasts
-      function showToast(message, type = 'info') {
-        const toasts = $('#toasts');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        toast.setAttribute('role', 'alert');
-        toast.setAttribute('aria-live', 'assertive');
-        
-        toasts.appendChild(toast);
-        
-        setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 300);
-        }, 3000);
-      }
-      
-      // Sistema de vídeo
-      const videoCard = $('#video-card');
-      const videoLightbox = $('#video-lightbox');
-      const videoIframe = $('#video-iframe');
-      const closeVideo = $('#close-video');
-      
-      videoCard?.addEventListener('click', () => {
-        const videoId = videoCard.getAttribute('data-video-id');
-        const baseSrc = videoIframe.getAttribute('data-base-src');
-        
-        videoIframe.src = baseSrc;
-        videoLightbox.setAttribute('aria-hidden', 'false');
-        videoLightbox.style.display = 'flex';
-      });
-      
-      closeVideo?.addEventListener('click', () => {
-        videoIframe.src = 'about:blank';
-        videoLightbox.setAttribute('aria-hidden', 'true');
-        videoLightbox.style.display = 'none';
-      });
-      
-      videoLightbox?.addEventListener('click', (e) => {
-        if (e.target === videoLightbox) {
-          videoIframe.src = 'about:blank';
-          videoLightbox.setAttribute('aria-hidden', 'true');
-          videoLightbox.style.display = 'none';
-        }
-      });
-      
-      // Sistema de detalhes
-      const detailModal = $('#detail-modal');
-      const detailTitle = $('#detail-title');
-      const detailBody = $('#detail-body');
-      const detailClose = $('#detail-close');
-      const detailSource = $('#detail-source');
-      
-      $$('.card-led').forEach(card => {
-        card.addEventListener('click', function() {
-          const title = this.getAttribute('data-title') || this.querySelector('h5')?.textContent || 'Detalhes';
-          const detail = this.getAttribute('data-detail') || 'Informação detalhada em breve.';
-          const source = this.getAttribute('data-source') || '#';
-          
-          detailTitle.textContent = title;
-          detailBody.textContent = detail;
-          detailSource.href = source;
-          
-          detailModal.setAttribute('aria-hidden', 'false');
-          detailModal.style.display = 'flex';
-        });
-      });
-      
-      detailClose?.addEventListener('click', () => {
-        detailModal.setAttribute('aria-hidden', 'true');
-        detailModal.style.display = 'none';
-      });
-      
-      detailModal?.addEventListener('click', (e) => {
-        if (e.target === detailModal) {
-          detailModal.setAttribute('aria-hidden', 'true');
-          detailModal.style.display = 'none';
-        }
-      });
-      
-      // Animações de entrada
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-      
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, observerOptions);
-      
-      $$('.fade-in').forEach(el => observer.observe(el));
-      
-      // Navegação suave
-      $$('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = $(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            target.setAttribute('tabindex', '-1');
-            target.focus({ preventScroll: true });
-          }
-        });
-      });
-      
-      // Foco no conteúdo principal ao pular
-      $('.skip-link')?.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = $(this.getAttribute('href'));
-        if (target) {
-          target.setAttribute('tabindex', '-1');
-          target.focus({ preventScroll: true });
-          setTimeout(() => target.removeAttribute('tabindex'), 1000);
-        }
-      });
-      
-      console.log('Site carregado com sucesso');
+  <!-- Scripts otimizados para mobile -->
+<script src="js/core.js" defer></script>
+<script src="js/search.js" defer></script>
+<script src="js/gallery.js" defer></script>
+
+<!-- Inicialização otimizada -->
+<script>
+// Load estratégico para mobile
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js');
+  });
+}
+
+// Prevenir zoom em inputs (iOS)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('input, select, textarea').forEach(element => {
+    element.addEventListener('focus', function() {
+      window.scrollTo(0, 0);
+      document.body.style.zoom = "100%";
     });
-  </script>
+  });
+});
+</script>
 </body>
-
 </html>

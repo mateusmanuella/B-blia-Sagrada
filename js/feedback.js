@@ -1,9 +1,9 @@
-// feedback.js - Sistema de Feedback profissional
+// feedback.js - Sistema de Feedback profissional (OTIMIZADO)
 class FeedbackSystem {
   constructor() {
     this.storageKey = 'feedback.responses.v2';
     this.endpointKey = 'feedback.endpoint';
-    this.adminPass = 'admin2025'; // Em produção, usar variável de ambiente
+    this.adminPass = 'admin2025';
     this.questions = this.getQuestions();
     this.init();
   }
@@ -37,7 +37,96 @@ class FeedbackSystem {
           "Muitas não carregaram"
         ]
       },
-      // ... outras questões (manter as originais)
+      {
+        id: 3,
+        text: '3. O conteúdo é informativo?',
+        options: [
+          "Sim — conteúdo relevante e claro",
+          "Em boa parte útil",
+          "Parcialmente útil",
+          "Não achei informativo"
+        ]
+      },
+      {
+        id: 4,
+        text: '4. O design é agradável?',
+        options: [
+          "Sim — visual agradável e limpo",
+          "Design aceitável",
+          "Pode melhorar",
+          "Não gostei do visual"
+        ]
+      },
+      {
+        id: 5,
+        text: '5. Os títulos estão claros?',
+        options: [
+          "Sim — títulos objetivos",
+          "Em parte claros",
+          "Alguns são confusos",
+          "Títulos pouco descritivos"
+        ]
+      },
+      {
+        id: 6,
+        text: '6. Você encontrou erros de ortografia?',
+        options: [
+          "Não encontrei erros",
+          "Alguns erros pontuais",
+          "Vários erros",
+          "Muitos erros"
+        ]
+      },
+      {
+        id: 7,
+        text: '7. O vídeo é relevante?',
+        options: [
+          "Sim — vídeo relevante para o tema",
+          "Interessante, mas curto",
+          "Pouco relevante",
+          "Não assisti/irrelevante"
+        ]
+      },
+      {
+        id: 8,
+        text: '8. A busca funcionou bem?',
+        options: [
+          "Sim — busca retornou bons resultados",
+          "Funciona na maior parte",
+          "Resultados imprecisos",
+          "Busca não ajudou"
+        ]
+      },
+      {
+        id: 9,
+        text: '9. Os cartões "Leia mais" ajudaram?',
+        options: [
+          "Sim — ajudaram a entender melhor",
+          "Foram úteis parcialmente",
+          "Pouco úteis",
+          "Não foram úteis"
+        ]
+      },
+      {
+        id: 10,
+        text: '10. A leitura no celular foi confortável?',
+        options: [
+          "Sim — ótima leitura no celular",
+          "Boa leitura, com pequenas falhas",
+          "Algumas dificuldades",
+          "Muito desconfortável"
+        ]
+      },
+      {
+        id: 11,
+        text: '11. Você recomendaria o site?',
+        options: [
+          "Sim — recomendaria a outros",
+          "Talvez recomende",
+          "Raramente recomendaria",
+          "Não recomendaria"
+        ]
+      },
       {
         id: 12,
         text: '12. Qual a probabilidade de retornar ao site?',
@@ -81,7 +170,6 @@ class FeedbackSystem {
       await this.submitFeedback();
     });
 
-    // Limpar formulário
     document.getElementById('clear-form')?.addEventListener('click', () => {
       form.reset();
       window.bibleApp.showToast('Formulário limpo', 'info');
@@ -97,10 +185,8 @@ class FeedbackSystem {
     }
 
     try {
-      // Salvar localmente
       this.saveToLocalStorage(formData);
       
-      // Tentar enviar para endpoint externo
       const endpoint = localStorage.getItem(this.endpointKey);
       if (endpoint) {
         await this.sendToEndpoint(formData, endpoint);
@@ -108,10 +194,7 @@ class FeedbackSystem {
         window.bibleApp.showToast('Feedback salvo localmente! Obrigado!', 'success');
       }
 
-      // Limpar formulário
       document.getElementById('feedback-form').reset();
-      
-      // Analytics
       window.bibleApp.trackEvent('feedback', 'submitted', 'form');
 
     } catch (error) {
@@ -149,7 +232,6 @@ class FeedbackSystem {
       localStorage.setItem(this.storageKey, JSON.stringify(stored));
     } catch (error) {
       console.warn('Erro ao salvar localmente:', error);
-      // Tentar com dados menores
       const minimalData = { ...data, userAgent: '', screenResolution: '' };
       localStorage.setItem(this.storageKey, JSON.stringify([minimalData]));
     }
@@ -167,13 +249,11 @@ class FeedbackSystem {
   async sendToEndpoint(data, endpoint) {
     const formData = new URLSearchParams();
     
-    // Dados básicos
     formData.append('timestamp', data.timestamp);
     formData.append('freeText', data.freeText);
     formData.append('userAgent', data.userAgent);
     formData.append('screenResolution', data.screenResolution);
 
-    // Respostas das questões
     Object.entries(data.answers).forEach(([key, value]) => {
       formData.append(key, value || '');
     });
@@ -195,7 +275,6 @@ class FeedbackSystem {
   }
 
   setupAdminPanel() {
-    // Painel administrativo
     this.setupEndpointManagement();
     this.setupAdminAuth();
   }
@@ -210,7 +289,6 @@ class FeedbackSystem {
         
         try {
           if (value) {
-            // Validar URL
             new URL(value);
             localStorage.setItem(this.endpointKey, value);
             window.bibleApp.showToast('Endpoint salvo com sucesso', 'success');
@@ -233,7 +311,6 @@ class FeedbackSystem {
   }
 
   setupAdminAuth() {
-    // Implementação do painel admin (similar ao original)
     const adminLogin = document.getElementById('admin-login');
     const adminLogout = document.getElementById('admin-logout');
     
@@ -344,7 +421,6 @@ class FeedbackSystem {
   }
 }
 
-// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('feedback-form')) {
     window.feedbackSystem = new FeedbackSystem();

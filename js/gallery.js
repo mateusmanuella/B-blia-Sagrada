@@ -1,4 +1,4 @@
-// gallery.js - Gerenciador de Galeria e Lightbox
+// gallery.js - Gerenciador de Galeria e Lightbox (OTIMIZADO)
 class GalleryManager {
   constructor() {
     this.items = [];
@@ -14,7 +14,6 @@ class GalleryManager {
     this.setupSearch();
     this.setupFavorites();
     this.setupLazyLoading();
-    this.setupTiltEffects();
   }
 
   cacheGalleryItems() {
@@ -38,7 +37,6 @@ class GalleryManager {
     
     if (!this.lightbox) return;
 
-    // Event listeners
     document.getElementById('lb-prev')?.addEventListener('click', () => this.showPrev());
     document.getElementById('lb-next')?.addEventListener('click', () => this.showNext());
     document.getElementById('lb-close')?.addEventListener('click', () => this.closeLightbox());
@@ -47,7 +45,6 @@ class GalleryManager {
       if (e.target === this.lightbox) this.closeLightbox();
     });
 
-    // Navegação por teclado
     document.addEventListener('keydown', (e) => {
       if (!this.lightbox.classList.contains('show')) return;
       
@@ -67,7 +64,6 @@ class GalleryManager {
       }
     });
 
-    // Configurar clicks nos cards
     this.items.forEach((item, index) => {
       item.element.addEventListener('click', () => this.openLightbox(index));
       item.element.addEventListener('keydown', (e) => {
@@ -94,7 +90,6 @@ class GalleryManager {
     this.lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     
-    // Focar no botão de fechar
     document.getElementById('lb-close')?.focus();
   }
 
@@ -104,7 +99,6 @@ class GalleryManager {
     this.lightboxImage.src = '';
     document.body.style.overflow = '';
     
-    // Restaurar foco
     if (this.lastActiveElement) {
       this.lastActiveElement.focus();
     }
@@ -126,7 +120,6 @@ class GalleryManager {
     
     if (!this.videoLightbox) return;
 
-    // Configurar cards de vídeo
     document.querySelectorAll('.card-media[data-video-id]').forEach(card => {
       card.addEventListener('click', () => this.openVideo(card.dataset.videoId));
       card.addEventListener('keydown', (e) => {
@@ -137,13 +130,11 @@ class GalleryManager {
       });
     });
 
-    // Video principal
     const mainVideoCard = document.getElementById('video-card');
     if (mainVideoCard) {
       mainVideoCard.addEventListener('click', () => this.openVideo(mainVideoCard.dataset.videoId));
     }
 
-    // Controles
     document.getElementById('close-video')?.addEventListener('click', () => this.closeVideo());
     this.videoLightbox.addEventListener('click', (e) => {
       if (e.target === this.videoLightbox) this.closeVideo();
@@ -208,7 +199,6 @@ class GalleryManager {
       const isVisible = !term || searchableText.includes(term);
       item.element.style.display = isVisible ? '' : 'none';
       
-      // Destacar parent container se for coluna
       if (item.element.parentElement?.classList.contains('col-md-4')) {
         item.element.parentElement.style.display = isVisible ? '' : 'none';
       }
@@ -218,7 +208,6 @@ class GalleryManager {
       if (isVisible) matches++;
     });
 
-    // Atualizar contador
     const countEl = document.getElementById('search-count');
     if (countEl) {
       countEl.textContent = term ? `${matches} resultado(s)` : '';
@@ -227,8 +216,6 @@ class GalleryManager {
   }
 
   setupFavorites() {
-    // Os favoritos são gerenciados pelo FavoriteManager em core.js
-    // Esta função configura os botões visuais
     this.updateFavoriteButtons();
   }
 
@@ -278,36 +265,8 @@ class GalleryManager {
 
     this.items.forEach(item => observer.observe(item.element));
   }
-
-  setupTiltEffects() {
-    this.items.forEach(item => {
-      this.bindTiltEffect(item.element);
-    });
-  }
-
-  bindTiltEffect(element) {
-    element.classList.add('tilt-enabled');
-    
-    element.addEventListener('mousemove', (e) => {
-      const rect = element.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / centerY * 6;
-      const rotateY = (centerX - x) / centerX * 6;
-      
-      element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-
-    element.addEventListener('mouseleave', () => {
-      element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    });
-  }
 }
 
-// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('.gallery-card, .info-card')) {
     window.galleryManager = new GalleryManager();
